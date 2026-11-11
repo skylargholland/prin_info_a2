@@ -1,0 +1,8 @@
+- added firstnf (file that takes the dataset from create_data.sql 
+    from last project and adds locationid/puts it into 1nf)
+
+- !!!WARNING!!!: do NOT add/push the csv file into github [its too 
+    big you will have issues if you try to] instead just drag it in when 
+    you need it and drag it out when you're about to commit/push again
+
+- firstnf.sql NOT VALIDATED YET!!!
