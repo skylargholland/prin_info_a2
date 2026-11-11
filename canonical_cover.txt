@@ -46,4 +46,5 @@
 
 {locationID} -> {state_code, county_code, census_tract_number, state_name, state_abbr, county_name} //WE NEED TO DISCUSS WHAT LOCATION_ID COMPRISES OF!!!!! -- when we concatinate it with _ is that violating 1nf
 
+IS THERE A CO_APPLICANT RACE?? review this
 
