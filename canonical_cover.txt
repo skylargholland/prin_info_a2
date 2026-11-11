@@ -1,0 +1,40 @@
+{respondent_id} -> {agency_name, agency_abbr, agency_code}
+
+{loan_type} -> {loan_type_name}
+
+{property_type} -> {property_type_name}
+
+{loan_purpose} -> {loan_purpose_name}
+
+{owner_occupancy} -> {owner_occupancy_name}
+
+{preapproval} -> {preapproval_name}
+
+{action_taken} -> {action_taken_name}
+
+{applicant_ethnicity} -> {applicant_ethnicity_name}
+
+{co_applicant_ethnicity} -> {co_applicant_ethnicity_name}
+
+{applicant_sex} -> {applicant_sex_name}
+
+{co_applicant_sex} -> {co_applicant_sex_name}
+
+{purchaser_type} -> {purchaser_type_name}
+
+{hoepa_status} -> {hoepa_status_name}
+
+{lien_status} -> {lien_status_name}
+
+{edit_status} -> {edit_status_name}
+
+{locationID} -> {state_code, county_code, census_tract_number, state_name, state_abbr, county_name}
+
+{state_code, county_code, census_tract_number} -> {locationID}
+
+{race_code} -> {race_name}
+
+{denial_reason_code} -> {denial_reason_name}
+
+//TBD EXCLUDE THIS -- is it needed it cannonical cover?
+{sequence_number} -> {locationID, as_of_year, respondent_id, agency_name, agency_abbr, agency_code, loan_type_name, loan_type, property_type_name, property_type, loan_purpose_name, loan_purpose, owner_occupancy_name, owner_occupancy, loan_amount_000s, preapproval_name, preapproval, action_taken_name, action_taken, msamd_name, msamd, state_name, state_abbr, state_code, county_name, county_code, census_tract_number, applicant_ethnicity_name, applicant_ethnicity, co_applicant_ethnicity_name, co_applicant_ethnicity, applicant_sex_name, applicant_sex, co_applicant_sex_name, co_applicant_sex, applicant_income_000s, purchaser_type_name, purchaser_type, rate_spread, hoepa_status_name, hoepa_status, lien_status_name, lien_status, edit_status_name, edit_status, population, minority_population, hud_median_family_income, tract_to_msamd_income, number_of_owner_occupied_units, number_of_1_to_4_family_units, application_date_indicator}
