@@ -6,3 +6,7 @@
     you need it and drag it out when you're about to commit/push again
 
 - firstnf.sql NOT VALIDATED YET!!!
+
+- raymondcho.net USE THIS TO VERIFY CANONICAL COVER
+
+- WHEN WRITING OUT FUNCTIONAL DEPENDENCIES WITH #codes always write (# -> abbreviation) NOT THE OTHER WAY AROUND
