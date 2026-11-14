@@ -13,4 +13,10 @@
 
 Questions for Professor:
 1) When we create locationID should we be sequencing or should we be concatinating with values ex. statecode_countycode_zipcode_...
+    concatinate a column as a helper, sequence from there, delete helper column!
 2) What does locationID comprise of (what are its elements?)
+    MY THOUGHTS: msamd (aka. metropolitan division code), state, county, census tract?
+    COPILOT SAYS: dont inclue msamd because that is the larger region that holds many census tracts, since we have census tracts its not needed
+    locationID = (state, county, census_tract)
+
+    //NEED TO CHECK THE firstnf.sql code

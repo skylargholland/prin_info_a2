@@ -42,8 +42,6 @@
 !!!WHAT I THINK SHOULD ALSO BE ADDED OR ADJUSTED!!!
 {agency_code} -> {agency_abbr, agency_name}
 
-{edit_status} -> {edit_status_name} //SEEMS LOGICALLY CORRECT BUT ITS ALL EMPTY? do we include these
-
 {locationID} -> {state_code, county_code, census_tract_number, state_name, state_abbr, county_name} //WE NEED TO DISCUSS WHAT LOCATION_ID COMPRISES OF!!!!! -- when we concatinate it with _ is that violating 1nf
 
 IS THERE A CO_APPLICANT RACE?? review this

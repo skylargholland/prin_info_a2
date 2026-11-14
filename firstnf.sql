@@ -7,6 +7,29 @@ DROP TABLE IF EXISTS ApplicantRace;
 DROP TABLE IF EXISTS Loan1NF;
 
 ----------------------------------------------------
+-- Create Location lookup table
+----------------------------------------------------
+
+CREATE TABLE Location AS
+SELECT
+    ROW_NUMBER() OVER (
+        ORDER BY state_code, county_code, census_tract_number
+    ) AS location_id,
+    state_code,
+    county_code,
+    census_tract_number
+FROM (
+    SELECT DISTINCT
+        state_code,
+        county_code,
+        census_tract_number
+    FROM Preliminary
+) loc;
+
+ALTER TABLE Location
+ADD PRIMARY KEY (location_id);
+
+----------------------------------------------------
 -- Main Loan Table
 ----------------------------------------------------
 
@@ -14,13 +37,8 @@ CREATE TABLE Loan1NF AS
 SELECT
     sequence_number,
 
-    -- Location ID
-    CONCAT(
-        state_code, '_',
-        county_code, '_',
-        census_tract_number
-    ) AS locationID,
-
+    L.location_id,
+    
     as_of_year,
     respondent_id,
     agency_name,
@@ -97,7 +115,11 @@ SELECT
 
     application_date_indicator
 
-FROM Preliminary;
+FROM Preliminary P
+JOIN Location L
+ON P.state_code = L.state_code
+AND P.county_code = L.county_code
+AND P.census_tract_number = L.census_tract_number;
 
 ALTER TABLE Loan1NF
 ADD PRIMARY KEY (sequence_number);
