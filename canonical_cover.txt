@@ -41,3 +41,7 @@
 !!!WHAT I THINK SHOULD ALSO BE ADDED OR ADJUSTED!!!
 {locationID} -> {state_code, county_code, census_tract_number, state_name, state_abbr, county_name}
 
+SHOULD WE ADD THESE???:
+{locationID} -> {state_code, county_code, census_tract_number, state_name, state_abbr, county_name, population, minority_population, hud_median_family_income, tract_to_msamd_income, number_of_owner_occupied_units, number_of_1_to_4_family_units}
+ 
+{state_code, county_code, census_tract_number} -> {locationID}
