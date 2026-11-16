@@ -1,0 +1,46 @@
+CS336 Project 2 - Step 1: Functional Dependencies (Canonical Cover)
+
+Columns created for 1st normal form:
+  application_id            - unique number for every row (primary key from the last project)
+  location_id               - unique number for every distinct location
+  applicant_race, applicant_race_name, applicant_race_number            (replace applicant_race_1..5 and applicant_race_name_1..5)
+  co_applicant_race, co_applicant_race_name, co_applicant_race_number   (replace co_applicant_race_1..5 and co_applicant_race_name_1..5)
+  denial_reason, denial_reason_name, denial_reason_number               (replace denial_reason_1..3 and denial_reason_name_1..3)
+
+
+Application
+{application_id} -> {as_of_year, respondent_id, agency_code, loan_type, property_type, loan_purpose, owner_occupancy, loan_amount_000s, preapproval, action_taken, location_id, applicant_ethnicity, co_applicant_ethnicity, applicant_sex, co_applicant_sex, applicant_income_000s, purchaser_type, rate_spread, hoepa_status, lien_status}
+
+Code -> name
+{agency_code} -> {agency_name, agency_abbr}
+{loan_type} -> {loan_type_name}
+{property_type} -> {property_type_name}
+{loan_purpose} -> {loan_purpose_name}
+{owner_occupancy} -> {owner_occupancy_name}
+{preapproval} -> {preapproval_name}
+{action_taken} -> {action_taken_name}
+{applicant_ethnicity} -> {applicant_ethnicity_name}
+{co_applicant_ethnicity} -> {co_applicant_ethnicity_name}
+{applicant_sex} -> {applicant_sex_name}
+{co_applicant_sex} -> {co_applicant_sex_name}
+{purchaser_type} -> {purchaser_type_name}
+{hoepa_status} -> {hoepa_status_name}
+{lien_status} -> {lien_status_name}
+{applicant_race} -> {applicant_race_name}
+{co_applicant_race} -> {co_applicant_race_name}
+{denial_reason} -> {denial_reason_name}
+
+Location
+{location_id} -> {state_code, county_code, msamd, census_tract_number, population, minority_population, hud_median_family_income, tract_to_msamd_income, number_of_owner_occupied_units, number_of_1_to_4_family_units}
+{state_code, county_code, msamd, census_tract_number, population, minority_population, hud_median_family_income, tract_to_msamd_income, number_of_owner_occupied_units, number_of_1_to_4_family_units} -> {location_id}
+{msamd} -> {msamd_name}
+{state_code} -> {state_name, state_abbr}
+{state_code, county_code} -> {county_name}
+
+Race and denial reason (1st normal form)
+{application_id, applicant_race_number} -> {applicant_race}
+{application_id, co_applicant_race_number} -> {co_applicant_race}
+{application_id, denial_reason_number} -> {denial_reason}
+
+Columns that are empty in every row
+{} -> {edit_status, edit_status_name, sequence_number, application_date_indicator}
