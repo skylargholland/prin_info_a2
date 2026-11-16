@@ -29,18 +29,16 @@ Code -> name
 {applicant_race} -> {applicant_race_name}
 {co_applicant_race} -> {co_applicant_race_name}
 {denial_reason} -> {denial_reason_name}
+{edit_status} -> {edit_status_name}
 
 Location
 {location_id} -> {state_code, county_code, msamd, census_tract_number, population, minority_population, hud_median_family_income, tract_to_msamd_income, number_of_owner_occupied_units, number_of_1_to_4_family_units}
 {state_code, county_code, msamd, census_tract_number, population, minority_population, hud_median_family_income, tract_to_msamd_income, number_of_owner_occupied_units, number_of_1_to_4_family_units} -> {location_id}
 {msamd} -> {msamd_name}
 {state_code} -> {state_name, state_abbr}
-{state_code, county_code} -> {county_name}
+{county_code} -> {county_name}
 
 Race and denial reason (1st normal form)
 {application_id, applicant_race_number} -> {applicant_race}
 {application_id, co_applicant_race_number} -> {co_applicant_race}
 {application_id, denial_reason_number} -> {denial_reason}
-
-Columns that are empty in every row
-{} -> {edit_status, edit_status_name, sequence_number, application_date_indicator}
