@@ -24,6 +24,7 @@ Code -> name
 
 Location
 {location_id} -> {state_code, county_code, msamd, census_tract_number, population, minority_population, hud_median_family_income, tract_to_msamd_income, number_of_owner_occupied_units, number_of_1_to_4_family_units}
+{state_code, county_code, msamd, census_tract_number, population, minority_population, hud_median_family_income, tract_to_msamd_income, number_of_owner_occupied_units, number_of_1_to_4_family_units} -> {location_id}
 {msamd} -> {msamd_name}
 {state_code} -> {state_name, state_abbr}
 {state_code, county_code} -> {county_name}
