@@ -1,13 +1,5 @@
 CS336 Project 2 - Step 1: Functional Dependencies (Canonical Cover)
 
-Columns created for 1st normal form:
-  sequence_number            - unique number for every row (primary key from the last project)
-  location_id               - unique number for every distinct location
-  applicant_race, applicant_race_name, applicant_race_number            (replace applicant_race_1..5 and applicant_race_name_1..5)
-  co_applicant_race, co_applicant_race_name, co_applicant_race_number   (replace co_applicant_race_1..5 and co_applicant_race_name_1..5)
-  denial_reason, denial_reason_name, denial_reason_number               (replace denial_reason_1..3 and denial_reason_name_1..3)
-
-
 Application
 {sequence_number} -> {as_of_year, respondent_id, agency_code, loan_type, property_type, loan_purpose, owner_occupancy, loan_amount_000s, preapproval, action_taken, location_id, applicant_ethnicity, co_applicant_ethnicity, applicant_sex, co_applicant_sex, applicant_income_000s, purchaser_type, rate_spread, hoepa_status, lien_status, edit_status, application_date_indicator}
 
