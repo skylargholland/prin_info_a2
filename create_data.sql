@@ -1,5 +1,5 @@
 -- create_load.sql
--- Project 1 (CS336): load the HMDA 2017 nationwide CSV into Preliminary.
+-- Project 1 (CS336): load the HMDA 2017 NJ CSV into Preliminary.
 -- Run inside psql, started from the folder that holds the CSV:
 --     \i create_load.sql
 
