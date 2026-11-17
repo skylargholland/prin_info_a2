@@ -36,7 +36,7 @@ Location
 {state_code, county_code, msamd, census_tract_number, population, minority_population, hud_median_family_income, tract_to_msamd_income, number_of_owner_occupied_units, number_of_1_to_4_family_units} -> {location_id}
 {msamd} -> {msamd_name}
 {state_code} -> {state_name, state_abbr}
-{county_code} -> {county_name}
+{state_code, county_code} -> {county_name}
 
 Race and denial reason (1st normal form)
 {sequence_number, applicant_race_number} -> {applicant_race}
