@@ -2,6 +2,8 @@
 -- CS336 Project 2 Step 2
 -- Assumes create_data.sql has already been run and Preliminary exists.
 
+SET statement_timeout = 0;
+
 --------------------------------------------------
 -- Drop tables if they already exist
 --------------------------------------------------
