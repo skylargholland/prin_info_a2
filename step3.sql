@@ -310,7 +310,7 @@ FROM Preliminary;
 CREATE TABLE Loan_Application (
     sequence_number BIGINT PRIMARY KEY,
     as_of_year INT,
-    respondent_id TEXT,
+    respondent_id TEXT NOT NULL,
     agency_code INT REFERENCES Agency (agency_code),
     loan_type INT REFERENCES Loan_Type (loan_type),
     property_type INT REFERENCES Property_Type (property_type),
