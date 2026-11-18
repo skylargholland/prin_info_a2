@@ -1,10 +1,4 @@
 -- export.sql  --  CS336 Project 2, Step 4
--- Rebuilds the original HMDA CSV using ONLY the normalized tables built by
--- step3.sql. The Preliminary table is not used anywhere in this script.
---
--- Run inside psql, from the folder you want the file written to:
---     \i export.sql
--- Output: export.csv (identical to hmda_2017_nj_all-records_labels.csv)
 
 \set ON_ERROR_STOP on
 SET statement_timeout = 0;
