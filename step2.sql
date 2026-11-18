@@ -162,7 +162,7 @@ SELECT DISTINCT
     purchaser_type_name
 FROM Preliminary;
 
-ALTER TABLE PurchaserType
+ALTER TABLE Purchaser_Type
 ADD PRIMARY KEY (purchaser_type);
 
 --------------------------------------------------
