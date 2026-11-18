@@ -9,7 +9,7 @@ DROP TABLE IF EXISTS
     Loan_Denial,
     Co_Applicant_Race,
     Applicant_Race,
-    Application,
+    Loan_Application,
     Race,
     Denial_Reason,
     Location,
@@ -307,7 +307,7 @@ INSERT INTO Null_Columns
 SELECT DISTINCT edit_status, edit_status_name, application_date_indicator
 FROM Preliminary;
 
-CREATE TABLE Application (
+CREATE TABLE Loan_Application (
     sequence_number BIGINT PRIMARY KEY,
     as_of_year INT,
     respondent_id TEXT,
@@ -331,7 +331,7 @@ CREATE TABLE Application (
     lien_status INT REFERENCES Lien_Status (lien_status)
 );
 
-INSERT INTO Application (
+INSERT INTO Loan_Application (
     sequence_number,
     as_of_year,
     respondent_id,
@@ -390,7 +390,7 @@ JOIN Location AS l
  AND p.number_of_1_to_4_family_units IS NOT DISTINCT FROM l.number_of_1_to_4_family_units;
 
 CREATE TABLE Applicant_Race (
-    sequence_number BIGINT REFERENCES Application (sequence_number),
+    sequence_number BIGINT REFERENCES Loan_Application (sequence_number),
     race_number INT CHECK (race_number BETWEEN 1 AND 5),
     race INT REFERENCES Race (race),
     PRIMARY KEY (sequence_number, race_number)
@@ -411,7 +411,7 @@ FROM (
 WHERE race IS NOT NULL;
 
 CREATE TABLE Co_Applicant_Race (
-    sequence_number BIGINT REFERENCES Application (sequence_number),
+    sequence_number BIGINT REFERENCES Loan_Application (sequence_number),
     race_number INT CHECK (race_number BETWEEN 1 AND 5),
     race INT REFERENCES Race (race),
     PRIMARY KEY (sequence_number, race_number)
@@ -457,7 +457,7 @@ COMMIT;
 -- Row-count and duplicate-key validation.
 SELECT 'Preliminary' AS table_name, COUNT(*) AS row_count FROM Preliminary
 UNION ALL
-SELECT 'Application', COUNT(*) FROM Application;
+SELECT 'Loan_Application', COUNT(*) FROM Loan_Application;
 
 SELECT 'Applicant_Race' AS table_name, COUNT(*) AS row_count FROM Applicant_Race
 UNION ALL
