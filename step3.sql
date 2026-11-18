@@ -6,31 +6,31 @@ SET statement_timeout = 0;
 BEGIN;
 
 DROP TABLE IF EXISTS
-    ApplicationDenialReason,
-    CoApplicantRace,
-    ApplicantRace,
+    Loan_Denial,
+    Co_Applicant_Race,
+    Applicant_Race,
     Application,
     Race,
-    DenialReasonType,
+    Denial_Reason,
     Location,
     State,
     County,
     MSAMD,
     Agency,
-    LoanType,
-    PropertyType,
-    LoanPurpose,
-    OwnerOccupancy,
+    Loan_Type,
+    Property_Type,
+    Loan_Purpose,
+    Owner_Occupancy,
     Preapproval,
-    ActionTaken,
+    Action_Taken,
     ApplicantEthnicity,
     CoApplicantEthnicity,
     ApplicantSex,
     CoApplicantSex,
-    PurchaserType,
-    HOEPAStatus,
-    LienStatus,
-    Questionnaire
+    Purchaser_Type,
+    HOEPA_Status,
+    Lien_Status,
+    Null_Columns
 CASCADE;
 
 CREATE TABLE Agency (
@@ -43,38 +43,38 @@ SELECT DISTINCT agency_code, agency_name, agency_abbr
 FROM Preliminary
 WHERE agency_code IS NOT NULL;
 
-CREATE TABLE LoanType (
+CREATE TABLE Loan_Type (
     loan_type INT PRIMARY KEY,
     loan_type_name TEXT
 );
-INSERT INTO LoanType
+INSERT INTO Loan_Type
 SELECT DISTINCT loan_type, loan_type_name
 FROM Preliminary
 WHERE loan_type IS NOT NULL;
 
-CREATE TABLE PropertyType (
+CREATE TABLE Property_Type (
     property_type INT PRIMARY KEY,
     property_type_name TEXT
 );
-INSERT INTO PropertyType
+INSERT INTO Property_Type
 SELECT DISTINCT property_type, property_type_name
 FROM Preliminary
 WHERE property_type IS NOT NULL;
 
-CREATE TABLE LoanPurpose (
+CREATE TABLE Loan_Purpose (
     loan_purpose INT PRIMARY KEY,
     loan_purpose_name TEXT
 );
-INSERT INTO LoanPurpose
+INSERT INTO Loan_Purpose
 SELECT DISTINCT loan_purpose, loan_purpose_name
 FROM Preliminary
 WHERE loan_purpose IS NOT NULL;
 
-CREATE TABLE OwnerOccupancy (
+CREATE TABLE Owner_Occupancy (
     owner_occupancy INT PRIMARY KEY,
     owner_occupancy_name TEXT
 );
-INSERT INTO OwnerOccupancy
+INSERT INTO Owner_Occupancy
 SELECT DISTINCT owner_occupancy, owner_occupancy_name
 FROM Preliminary
 WHERE owner_occupancy IS NOT NULL;
@@ -88,11 +88,11 @@ SELECT DISTINCT preapproval, preapproval_name
 FROM Preliminary
 WHERE preapproval IS NOT NULL;
 
-CREATE TABLE ActionTaken (
+CREATE TABLE Action_Taken (
     action_taken INT PRIMARY KEY,
     action_taken_name TEXT
 );
-INSERT INTO ActionTaken
+INSERT INTO Action_Taken
 SELECT DISTINCT action_taken, action_taken_name
 FROM Preliminary
 WHERE action_taken IS NOT NULL;
@@ -133,29 +133,29 @@ SELECT DISTINCT co_applicant_sex, co_applicant_sex_name
 FROM Preliminary
 WHERE co_applicant_sex IS NOT NULL;
 
-CREATE TABLE PurchaserType (
+CREATE TABLE Purchaser_Type (
     purchaser_type INT PRIMARY KEY,
     purchaser_type_name TEXT
 );
-INSERT INTO PurchaserType
+INSERT INTO Purchaser_Type
 SELECT DISTINCT purchaser_type, purchaser_type_name
 FROM Preliminary
 WHERE purchaser_type IS NOT NULL;
 
-CREATE TABLE HOEPAStatus (
+CREATE TABLE HOEPA_Status (
     hoepa_status INT PRIMARY KEY,
     hoepa_status_name TEXT
 );
-INSERT INTO HOEPAStatus
+INSERT INTO HOEPA_Status
 SELECT DISTINCT hoepa_status, hoepa_status_name
 FROM Preliminary
 WHERE hoepa_status IS NOT NULL;
 
-CREATE TABLE LienStatus (
+CREATE TABLE Lien_Status (
     lien_status INT PRIMARY KEY,
     lien_status_name TEXT
 );
-INSERT INTO LienStatus
+INSERT INTO Lien_Status
 SELECT DISTINCT lien_status, lien_status_name
 FROM Preliminary
 WHERE lien_status IS NOT NULL;
@@ -253,13 +253,13 @@ FROM (
 ) AS distinct_locations;
 
 CREATE TABLE Race (
-    race_code INT PRIMARY KEY,
+    race INT PRIMARY KEY,
     race_name TEXT
 );
-INSERT INTO Race (race_code, race_name)
-SELECT DISTINCT race_code, race_name
+INSERT INTO Race (race, race_name)
+SELECT DISTINCT race, race_name
 FROM (
-    SELECT applicant_race_1 AS race_code, applicant_race_name_1 AS race_name FROM Preliminary
+    SELECT applicant_race_1 AS race, applicant_race_name_1 AS race_name FROM Preliminary
     UNION ALL
     SELECT applicant_race_2, applicant_race_name_2 FROM Preliminary
     UNION ALL
@@ -279,31 +279,31 @@ FROM (
     UNION ALL
     SELECT co_applicant_race_5, co_applicant_race_name_5 FROM Preliminary
 ) AS all_races
-WHERE race_code IS NOT NULL;
+WHERE race IS NOT NULL;
 
-CREATE TABLE DenialReasonType (
-    denial_reason_code INT PRIMARY KEY,
+CREATE TABLE Denial_Reason (
+    denial_reason INT PRIMARY KEY,
     denial_reason_name TEXT
 );
-INSERT INTO DenialReasonType (denial_reason_code, denial_reason_name)
-SELECT DISTINCT denial_reason_code, denial_reason_name
+INSERT INTO Denial_Reason (denial_reason, denial_reason_name)
+SELECT DISTINCT denial_reason, denial_reason_name
 FROM (
-    SELECT denial_reason_1 AS denial_reason_code, denial_reason_name_1 AS denial_reason_name FROM Preliminary
+    SELECT denial_reason_1 AS denial_reason, denial_reason_name_1 AS denial_reason_name FROM Preliminary
     UNION ALL
     SELECT denial_reason_2, denial_reason_name_2 FROM Preliminary
     UNION ALL
     SELECT denial_reason_3, denial_reason_name_3 FROM Preliminary
 ) AS all_denial_reasons
-WHERE denial_reason_code IS NOT NULL;
+WHERE denial_reason IS NOT NULL;
 
-CREATE TABLE Questionnaire (
+CREATE TABLE Null_Columns (
     edit_status INT,
     edit_status_name TEXT,
     application_date_indicator INT
 );
-COMMENT ON TABLE Questionnaire IS
-    'REVIEW: These fields appear constant throughout the dataset. Questionnaire table retained solely to preserve original CSV contents and allow lossless reconstruction.';
-INSERT INTO Questionnaire
+COMMENT ON TABLE Null_Columns IS
+    'REVIEW: These fields appear constant throughout the dataset. Null_Columns table retained solely to preserve original CSV contents and allow lossless reconstruction.';
+INSERT INTO Null_Columns
 SELECT DISTINCT edit_status, edit_status_name, application_date_indicator
 FROM Preliminary;
 
@@ -312,23 +312,23 @@ CREATE TABLE Application (
     as_of_year INT,
     respondent_id TEXT,
     agency_code INT REFERENCES Agency (agency_code),
-    loan_type INT REFERENCES LoanType (loan_type),
-    property_type INT REFERENCES PropertyType (property_type),
-    loan_purpose INT REFERENCES LoanPurpose (loan_purpose),
-    owner_occupancy INT REFERENCES OwnerOccupancy (owner_occupancy),
+    loan_type INT REFERENCES Loan_Type (loan_type),
+    property_type INT REFERENCES Property_Type (property_type),
+    loan_purpose INT REFERENCES Loan_Purpose (loan_purpose),
+    owner_occupancy INT REFERENCES Owner_Occupancy (owner_occupancy),
     loan_amount_000s INT,
     preapproval INT REFERENCES Preapproval (preapproval),
-    action_taken INT REFERENCES ActionTaken (action_taken),
+    action_taken INT REFERENCES Action_Taken (action_taken),
     location_id INT REFERENCES Location (location_id),
     applicant_ethnicity INT REFERENCES ApplicantEthnicity (applicant_ethnicity),
     co_applicant_ethnicity INT REFERENCES CoApplicantEthnicity (co_applicant_ethnicity),
     applicant_sex INT REFERENCES ApplicantSex (applicant_sex),
     co_applicant_sex INT REFERENCES CoApplicantSex (co_applicant_sex),
     applicant_income_000s INT,
-    purchaser_type INT REFERENCES PurchaserType (purchaser_type),
+    purchaser_type INT REFERENCES Purchaser_Type (purchaser_type),
     rate_spread NUMERIC,
-    hoepa_status INT REFERENCES HOEPAStatus (hoepa_status),
-    lien_status INT REFERENCES LienStatus (lien_status)
+    hoepa_status INT REFERENCES HOEPA_Status (hoepa_status),
+    lien_status INT REFERENCES Lien_Status (lien_status)
 );
 
 INSERT INTO Application (
@@ -389,16 +389,16 @@ JOIN Location AS l
  AND p.number_of_owner_occupied_units IS NOT DISTINCT FROM l.number_of_owner_occupied_units
  AND p.number_of_1_to_4_family_units IS NOT DISTINCT FROM l.number_of_1_to_4_family_units;
 
-CREATE TABLE ApplicantRace (
+CREATE TABLE Applicant_Race (
     sequence_number BIGINT REFERENCES Application (sequence_number),
     race_number INT CHECK (race_number BETWEEN 1 AND 5),
-    race_code INT REFERENCES Race (race_code),
+    race INT REFERENCES Race (race),
     PRIMARY KEY (sequence_number, race_number)
 );
-INSERT INTO ApplicantRace (sequence_number, race_number, race_code)
-SELECT sequence_number, race_number, race_code
+INSERT INTO Applicant_Race (sequence_number, race_number, race)
+SELECT sequence_number, race_number, race
 FROM (
-    SELECT sequence_number, 1 AS race_number, applicant_race_1 AS race_code FROM Preliminary
+    SELECT sequence_number, 1 AS race_number, applicant_race_1 AS race FROM Preliminary
     UNION ALL
     SELECT sequence_number, 2, applicant_race_2 FROM Preliminary
     UNION ALL
@@ -408,18 +408,18 @@ FROM (
     UNION ALL
     SELECT sequence_number, 5, applicant_race_5 FROM Preliminary
 ) AS applicant_races
-WHERE race_code IS NOT NULL;
+WHERE race IS NOT NULL;
 
-CREATE TABLE CoApplicantRace (
+CREATE TABLE Co_Applicant_Race (
     sequence_number BIGINT REFERENCES Application (sequence_number),
     race_number INT CHECK (race_number BETWEEN 1 AND 5),
-    race_code INT REFERENCES Race (race_code),
+    race INT REFERENCES Race (race),
     PRIMARY KEY (sequence_number, race_number)
 );
-INSERT INTO CoApplicantRace (sequence_number, race_number, race_code)
-SELECT sequence_number, race_number, race_code
+INSERT INTO Co_Applicant_Race (sequence_number, race_number, race)
+SELECT sequence_number, race_number, race
 FROM (
-    SELECT sequence_number, 1 AS race_number, co_applicant_race_1 AS race_code FROM Preliminary
+    SELECT sequence_number, 1 AS race_number, co_applicant_race_1 AS race FROM Preliminary
     UNION ALL
     SELECT sequence_number, 2, co_applicant_race_2 FROM Preliminary
     UNION ALL
@@ -429,28 +429,28 @@ FROM (
     UNION ALL
     SELECT sequence_number, 5, co_applicant_race_5 FROM Preliminary
 ) AS co_applicant_races
-WHERE race_code IS NOT NULL;
+WHERE race IS NOT NULL;
 
-CREATE TABLE ApplicationDenialReason (
+CREATE TABLE Loan_Denial (
     sequence_number BIGINT REFERENCES Application (sequence_number),
     denial_reason_number INT CHECK (denial_reason_number BETWEEN 1 AND 3),
-    denial_reason_code INT REFERENCES DenialReasonType (denial_reason_code),
+    denial_reason INT REFERENCES Denial_Reason (denial_reason),
     PRIMARY KEY (sequence_number, denial_reason_number)
 );
-INSERT INTO ApplicationDenialReason (
+INSERT INTO Loan_Denial (
     sequence_number,
     denial_reason_number,
-    denial_reason_code
+    denial_reason
 )
-SELECT sequence_number, denial_reason_number, denial_reason_code
+SELECT sequence_number, denial_reason_number, denial_reason
 FROM (
-    SELECT sequence_number, 1 AS denial_reason_number, denial_reason_1 AS denial_reason_code FROM Preliminary
+    SELECT sequence_number, 1 AS denial_reason_number, denial_reason_1 AS denial_reason FROM Preliminary
     UNION ALL
     SELECT sequence_number, 2, denial_reason_2 FROM Preliminary
     UNION ALL
     SELECT sequence_number, 3, denial_reason_3 FROM Preliminary
 ) AS application_denial_reasons
-WHERE denial_reason_code IS NOT NULL;
+WHERE denial_reason IS NOT NULL;
 
 COMMIT;
 
@@ -459,31 +459,31 @@ SELECT 'Preliminary' AS table_name, COUNT(*) AS row_count FROM Preliminary
 UNION ALL
 SELECT 'Application', COUNT(*) FROM Application;
 
-SELECT 'ApplicantRace' AS table_name, COUNT(*) AS row_count FROM ApplicantRace
+SELECT 'Applicant_Race' AS table_name, COUNT(*) AS row_count FROM Applicant_Race
 UNION ALL
-SELECT 'CoApplicantRace', COUNT(*) FROM CoApplicantRace
+SELECT 'Co_Applicant_Race', COUNT(*) FROM Co_Applicant_Race
 UNION ALL
-SELECT 'ApplicationDenialReason', COUNT(*) FROM ApplicationDenialReason
+SELECT 'Loan_Denial', COUNT(*) FROM Loan_Denial
 UNION ALL
 SELECT 'Location', COUNT(*) FROM Location
 UNION ALL
-SELECT 'Questionnaire', COUNT(*) FROM Questionnaire;
+SELECT 'Null_Columns', COUNT(*) FROM Null_Columns;
 
 SELECT table_name, key_value, copies
 FROM (
     SELECT 'Agency' AS table_name, agency_code::TEXT AS key_value, COUNT(*) AS copies FROM Agency GROUP BY agency_code
     UNION ALL
-    SELECT 'LoanType', loan_type::TEXT, COUNT(*) FROM LoanType GROUP BY loan_type
+    SELECT 'Loan_Type', loan_type::TEXT, COUNT(*) FROM Loan_Type GROUP BY loan_type
     UNION ALL
-    SELECT 'PropertyType', property_type::TEXT, COUNT(*) FROM PropertyType GROUP BY property_type
+    SELECT 'Property_Type', property_type::TEXT, COUNT(*) FROM Property_Type GROUP BY property_type
     UNION ALL
-    SELECT 'LoanPurpose', loan_purpose::TEXT, COUNT(*) FROM LoanPurpose GROUP BY loan_purpose
+    SELECT 'Loan_Purpose', loan_purpose::TEXT, COUNT(*) FROM Loan_Purpose GROUP BY loan_purpose
     UNION ALL
-    SELECT 'OwnerOccupancy', owner_occupancy::TEXT, COUNT(*) FROM OwnerOccupancy GROUP BY owner_occupancy
+    SELECT 'Owner_Occupancy', owner_occupancy::TEXT, COUNT(*) FROM Owner_Occupancy GROUP BY owner_occupancy
     UNION ALL
     SELECT 'Preapproval', preapproval::TEXT, COUNT(*) FROM Preapproval GROUP BY preapproval
     UNION ALL
-    SELECT 'ActionTaken', action_taken::TEXT, COUNT(*) FROM ActionTaken GROUP BY action_taken
+    SELECT 'Action_Taken', action_taken::TEXT, COUNT(*) FROM Action_Taken GROUP BY action_taken
     UNION ALL
     SELECT 'ApplicantEthnicity', applicant_ethnicity::TEXT, COUNT(*) FROM ApplicantEthnicity GROUP BY applicant_ethnicity
     UNION ALL
@@ -493,15 +493,15 @@ FROM (
     UNION ALL
     SELECT 'CoApplicantSex', co_applicant_sex::TEXT, COUNT(*) FROM CoApplicantSex GROUP BY co_applicant_sex
     UNION ALL
-    SELECT 'PurchaserType', purchaser_type::TEXT, COUNT(*) FROM PurchaserType GROUP BY purchaser_type
+    SELECT 'Purchaser_Type', purchaser_type::TEXT, COUNT(*) FROM Purchaser_Type GROUP BY purchaser_type
     UNION ALL
-    SELECT 'HOEPAStatus', hoepa_status::TEXT, COUNT(*) FROM HOEPAStatus GROUP BY hoepa_status
+    SELECT 'HOEPA_Status', hoepa_status::TEXT, COUNT(*) FROM HOEPA_Status GROUP BY hoepa_status
     UNION ALL
-    SELECT 'LienStatus', lien_status::TEXT, COUNT(*) FROM LienStatus GROUP BY lien_status
+    SELECT 'Lien_Status', lien_status::TEXT, COUNT(*) FROM Lien_Status GROUP BY lien_status
     UNION ALL
-    SELECT 'Race', race_code::TEXT, COUNT(*) FROM Race GROUP BY race_code
+    SELECT 'Race', race::TEXT, COUNT(*) FROM Race GROUP BY race
     UNION ALL
-    SELECT 'DenialReasonType', denial_reason_code::TEXT, COUNT(*) FROM DenialReasonType GROUP BY denial_reason_code
+    SELECT 'Denial_Reason', denial_reason::TEXT, COUNT(*) FROM Denial_Reason GROUP BY denial_reason
     UNION ALL
     SELECT 'State', state_code::TEXT, COUNT(*) FROM State GROUP BY state_code
     UNION ALL
