@@ -8,27 +8,27 @@ SET statement_timeout = 0;
 -- Drop tables if they already exist
 --------------------------------------------------
 
-DROP TABLE IF EXISTS Application CASCADE;
-DROP TABLE IF EXISTS BlankColumns CASCADE;
+DROP TABLE IF EXISTS Loan_Application CASCADE;
+DROP TABLE IF EXISTS Null_Columns CASCADE;
 DROP TABLE IF EXISTS Location CASCADE;
 DROP TABLE IF EXISTS County CASCADE;
 DROP TABLE IF EXISTS State CASCADE;
 DROP TABLE IF EXISTS MSAMD CASCADE;
 
 DROP TABLE IF EXISTS Agency CASCADE;
-DROP TABLE IF EXISTS LoanType CASCADE;
-DROP TABLE IF EXISTS PropertyType CASCADE;
-DROP TABLE IF EXISTS LoanPurpose CASCADE;
-DROP TABLE IF EXISTS OwnerOccupancy CASCADE;
+DROP TABLE IF EXISTS Loan_Type CASCADE;
+DROP TABLE IF EXISTS Property_Type CASCADE;
+DROP TABLE IF EXISTS Loan_Purpose CASCADE;
+DROP TABLE IF EXISTS Owner_Occupancy CASCADE;
 DROP TABLE IF EXISTS Preapproval CASCADE;
-DROP TABLE IF EXISTS ActionTaken CASCADE;
+DROP TABLE IF EXISTS Action_Taken CASCADE;
 DROP TABLE IF EXISTS ApplicantEthnicity CASCADE;
 DROP TABLE IF EXISTS CoApplicantEthnicity CASCADE;
 DROP TABLE IF EXISTS ApplicantSex CASCADE;
 DROP TABLE IF EXISTS CoApplicantSex CASCADE;
-DROP TABLE IF EXISTS PurchaserType CASCADE;
-DROP TABLE IF EXISTS HOEPAStatus CASCADE;
-DROP TABLE IF EXISTS LienStatus CASCADE;
+DROP TABLE IF EXISTS Purchaser_Type CASCADE;
+DROP TABLE IF EXISTS HOEPA_Status CASCADE;
+DROP TABLE IF EXISTS Lien_Status CASCADE;
 
 --------------------------------------------------
 -- Lookup Tables
@@ -46,46 +46,46 @@ ADD PRIMARY KEY (agency_code);
 
 --------------------------------------------------
 
-CREATE TABLE LoanType AS
+CREATE TABLE Loan_Type AS
 SELECT DISTINCT
     loan_type,
     loan_type_name
 FROM Preliminary;
 
-ALTER TABLE LoanType
+ALTER TABLE Loan_Type
 ADD PRIMARY KEY (loan_type);
 
 --------------------------------------------------
 
-CREATE TABLE PropertyType AS
+CREATE TABLE Property_Type AS
 SELECT DISTINCT
     property_type,
     property_type_name
 FROM Preliminary;
 
-ALTER TABLE PropertyType
+ALTER TABLE Property_Type
 ADD PRIMARY KEY (property_type);
 
 --------------------------------------------------
 
-CREATE TABLE LoanPurpose AS
+CREATE TABLE Loan_Purpose AS
 SELECT DISTINCT
     loan_purpose,
     loan_purpose_name
 FROM Preliminary;
 
-ALTER TABLE LoanPurpose
+ALTER TABLE Loan_Purpose
 ADD PRIMARY KEY (loan_purpose);
 
 --------------------------------------------------
 
-CREATE TABLE OwnerOccupancy AS
+CREATE TABLE Owner_Occupancy AS
 SELECT DISTINCT
     owner_occupancy,
     owner_occupancy_name
 FROM Preliminary;
 
-ALTER TABLE OwnerOccupancy
+ALTER TABLE Owner_Occupancy
 ADD PRIMARY KEY (owner_occupancy);
 
 --------------------------------------------------
@@ -101,13 +101,13 @@ ADD PRIMARY KEY (preapproval);
 
 --------------------------------------------------
 
-CREATE TABLE ActionTaken AS
+CREATE TABLE Action_Taken AS
 SELECT DISTINCT
     action_taken,
     action_taken_name
 FROM Preliminary;
 
-ALTER TABLE ActionTaken
+ALTER TABLE Action_Taken
 ADD PRIMARY KEY (action_taken);
 
 --------------------------------------------------
@@ -156,7 +156,7 @@ ADD PRIMARY KEY (co_applicant_sex);
 
 --------------------------------------------------
 
-CREATE TABLE PurchaserType AS
+CREATE TABLE Purchaser_Type AS
 SELECT DISTINCT
     purchaser_type,
     purchaser_type_name
@@ -167,24 +167,24 @@ ADD PRIMARY KEY (purchaser_type);
 
 --------------------------------------------------
 
-CREATE TABLE HOEPAStatus AS
+CREATE TABLE HOEPA_Status AS
 SELECT DISTINCT
     hoepa_status,
     hoepa_status_name
 FROM Preliminary;
 
-ALTER TABLE HOEPAStatus
+ALTER TABLE HOEPA_Status
 ADD PRIMARY KEY (hoepa_status);
 
 --------------------------------------------------
 
-CREATE TABLE LienStatus AS
+CREATE TABLE Lien_Status AS
 SELECT DISTINCT
     lien_status,
     lien_status_name
 FROM Preliminary;
 
-ALTER TABLE LienStatus
+ALTER TABLE Lien_Status
 ADD PRIMARY KEY (lien_status);
 
 --------------------------------------------------
@@ -277,7 +277,7 @@ ADD PRIMARY KEY (location_id);
 -- Blank Columns Table
 --------------------------------------------------
 
-CREATE TABLE BlankColumns AS
+CREATE TABLE Null_Columns AS
 SELECT DISTINCT
     edit_status,
     edit_status_name,
@@ -285,10 +285,10 @@ SELECT DISTINCT
 FROM Preliminary;
 
 --------------------------------------------------
--- Main Application Table
+-- Main Loan_Application Table
 --------------------------------------------------
 
-CREATE TABLE Application AS
+CREATE TABLE Loan_Application AS
 SELECT
     p.sequence_number,
     p.as_of_year,
@@ -389,49 +389,49 @@ AND (
      AND l.number_of_1_to_4_family_units IS NULL)
 );
 
-ALTER TABLE Application
+ALTER TABLE Loan_Application
 ADD PRIMARY KEY (sequence_number);
 
 --------------------------------------------------
 -- Foreign Keys
 --------------------------------------------------
 
-ALTER TABLE Application
+ALTER TABLE Loan_Application
 ADD CONSTRAINT fk_application_location
 FOREIGN KEY (location_id)
 REFERENCES Location(location_id);
 
-ALTER TABLE Application
+ALTER TABLE Loan_Application
 ADD CONSTRAINT fk_application_agency
 FOREIGN KEY (agency_code)
 REFERENCES Agency(agency_code);
 
-ALTER TABLE Application
+ALTER TABLE Loan_Application
 ADD CONSTRAINT fk_application_loan_type
 FOREIGN KEY (loan_type)
-REFERENCES LoanType(loan_type);
+REFERENCES Loan_Type(loan_type);
 
-ALTER TABLE Application
+ALTER TABLE Loan_Application
 ADD CONSTRAINT fk_application_property_type
 FOREIGN KEY (property_type)
-REFERENCES PropertyType(property_type);
+REFERENCES Property_Type(property_type);
 
-ALTER TABLE Application
+ALTER TABLE Loan_Application
 ADD CONSTRAINT fk_application_loan_purpose
 FOREIGN KEY (loan_purpose)
-REFERENCES LoanPurpose(loan_purpose);
+REFERENCES Loan_Purpose(loan_purpose);
 
-ALTER TABLE Application
+ALTER TABLE Loan_Application
 ADD CONSTRAINT fk_application_owner_occupancy
 FOREIGN KEY (owner_occupancy)
-REFERENCES OwnerOccupancy(owner_occupancy);
+REFERENCES Owner_Occupancy(owner_occupancy);
 
-ALTER TABLE Application
+ALTER TABLE Loan_Application
 ADD CONSTRAINT fk_application_preapproval
 FOREIGN KEY (preapproval)
 REFERENCES Preapproval(preapproval);
 
-ALTER TABLE Application
+ALTER TABLE Loan_Application
 ADD CONSTRAINT fk_application_action_taken
 FOREIGN KEY (action_taken)
-REFERENCES ActionTaken(action_taken);
+REFERENCES Action_Taken(action_taken);
