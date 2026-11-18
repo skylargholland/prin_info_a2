@@ -20,3 +20,5 @@ Questions for Professor:
     locationID = (state, county, census_tract)
 
     //NEED TO CHECK THE firstnf.sql code
+
+step2.sql (NEED TO REVIEW LCOATION ID COMBO AND THAT BLANK COLUMN ROW EVERYTHING ELSE LOOKS RIGHT)
